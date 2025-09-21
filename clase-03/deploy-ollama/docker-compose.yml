@@ -1,0 +1,57 @@
+version: "3.8"
+
+x-ollama-common: &ollama-common
+  image: ollama/ollama:latest
+  container_name: ollama
+  restart: unless-stopped
+  ports:
+    - "11434:11434"            # API local
+  environment:
+    - OLLAMA_HOST=0.0.0.0:11434
+    # Ajustes opcionales:
+    # - OLLAMA_KEEP_ALIVE=5m
+    # - OLLAMA_NUM_PARALLEL=1
+  volumes:
+    - ./ollama:/root/.ollama   # modelos y blobs en carpeta local
+  healthcheck:
+    test: ["CMD-SHELL", "curl -sf http://localhost:11434/api/tags >/dev/null || exit 1"]
+    interval: 10s
+    timeout: 5s
+    retries: 12
+
+services:
+  # === Perfil CPU ===
+  ollama-cpu:
+    <<: *ollama-common
+    profiles: ["cpu"]
+
+  # === Perfil GPU (NVIDIA) ===
+  ollama-gpu:
+    <<: *ollama-common
+    profiles: ["gpu"]
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 4 # Se puede usar "all" o un número específico de GPUs
+              capabilities: ["gpu"]
+    # Si tu Docker es antiguo y lo necesitas, puedes añadir:
+    # environment:
+    #   - NVIDIA_VISIBLE_DEVICES=all
+    #   - NVIDIA_DRIVER_CAPABILITIES=compute,utility
+
+  openwebui:
+    image: ghcr.io/open-webui/open-webui:main
+    container_name: openwebui
+    depends_on:
+      - ollama-cpu
+      - ollama-gpu
+    restart: unless-stopped
+    ports:
+      - "3000:8080"                   # UI: http://localhost:3000
+    environment:
+      - OLLAMA_BASE_URL=http://ollama-gpu:11434
+    volumes:
+      - ./openwebui:/app/backend/data
+    profiles: ["cpu", "gpu"]
