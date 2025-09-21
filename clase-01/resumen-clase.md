@@ -75,3 +75,22 @@ Se revisaron casos específicos para desarrolladores **backend**, **frontend**, 
 
 👉 **Próxima sesión (Clase 2):** *Prompt Engineering aplicado a programación* — fundamentos (zero-shot, one-shot, few-shot), diseño de prompts efectivos y casos prácticos.
 
+--- 
+
+
+## Material adicional
+
+Para complementar la clase, se recomienda revisar los siguientes recursos:
+
+* **Blog visual sobre la evolución de los LLMs**
+  [https://goyalpramod.github.io/blogs/evolution\_of\_LLMs](https://goyalpramod.github.io/blogs/evolution_of_LLMs)
+
+* **Survey de LLMs (arXiv, 2023)**
+  [https://arxiv.org/html/2303.18223v16](https://arxiv.org/html/2303.18223v16)
+
+* **Video canal DotCSV: ¿Por qué estas REDES NEURONALES son tan POTENTES? 🤔 | TRANSFORMERS Parte 2**
+  [https://www.youtube.com/watch?v=xi94v\_jl26U](https://www.youtube.com/watch?v=xi94v_jl26U)
+
+* **Artículo académico de referencia**
+  *History, development, and principles of large language models: an introductory survey* (AI & Ethics, 2025).
+  Este trabajo ofrece una visión accesible sobre la evolución, principios, aplicaciones, limitaciones y futuros desafíos de los LLMs.
